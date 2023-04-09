@@ -2,17 +2,22 @@ import { useState } from "react";
 
 const TodoList = () => {
   const [todo, setTodo] = useState("");
+  const [todoError, setTodoError] = useState("");
   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
     const {
       currentTarget: { value },
     } = event;
     // destructuring (ES6문법)
     setTodo(value);
+    setTodoError("");
   };
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(todo);
+    if (todo.length < 10) {
+      return setTodoError("To do should be longer");
+    }
+    console.log("submit");
   };
   return (
     <div>
@@ -23,6 +28,7 @@ const TodoList = () => {
           value={todo}
         />
         <button>Add</button>
+        <p>{todoError !== "" ? todoError : null}</p>
       </form>
     </div>
   );
