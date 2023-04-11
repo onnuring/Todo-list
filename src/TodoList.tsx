@@ -1,40 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { StringLiteral } from "typescript";
 
-// const TodoList = () => {
-//   const [todo, setTodo] = useState("");
-//   const [todoError, setTodoError] = useState("");
-//   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
-//     const {
-//       currentTarget: { value },
-//     } = event;
-//     // destructuring (ES6문법)
-//     setTodo(value);
-//     setTodoError("");
-//   };
-
-//   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-//     event.preventDefault();
-//     if (todo.length < 10) {
-//       return setTodoError("To do should be longer");
-//     }
-//     console.log("submit");
-//   };
-//   return (
-//     <div>
-//       <form onSubmit={onSubmit}>
-//         <input
-//           placeholder="할 일을 입력하세요"
-//           onChange={onChange}
-//           value={todo}
-//         />
-//         <button>Add</button>
-//         <p>{todoError !== "" ? todoError : null}</p>
-//       </form>
-//     </div>
-//   );
-// };
 interface IFormData {
   email: string;
   first_name: string;
@@ -42,7 +8,7 @@ interface IFormData {
   username: string;
   password: string;
   password_1: string;
-  // errors: { message: string };
+  extraError?: string;
 }
 
 const TodoList = () => {
@@ -50,11 +16,23 @@ const TodoList = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormData>();
+    setError,
+  } = useForm<IFormData>({
+    defaultValues: {
+      email: "@naver.com",
+    },
+  });
   //watch는 form의 입력값들의 변화를 관찰할 수 있게 해주는 함수이다.
   // console.log(watch());
-  const onValid = (data: any) => {
-    console.log(data);
+  const onValid = (data: IFormData) => {
+    if (data.password !== data.password_1) {
+      setError(
+        "password_1",
+        { message: "Password are not the same" },
+        { shouldFocus: true }
+      );
+    }
+    // setError("extraError", { message: "Server offline." });
   };
   console.log(errors);
 
@@ -105,7 +83,7 @@ const TodoList = () => {
         />
         <span>{errors?.password_1?.message}</span>
         <button>Add</button>
-        <p>{}</p>
+        <p>{errors?.extraError?.message}</p>
       </form>
     </div>
   );
