@@ -17,7 +17,7 @@ const Todo = ({ text, category, id }: ITodo) => {
       //2. 새로운 카데고리로 새로운 todo를 만들어야한다.
       const newTodo = { text, id, category: name as any };
 
-      //3. prevTodo를 newTodo로 바꿔준다 (기존배열에서 타겟객체를 제외한 앞뒤로 잘라주어야함)
+      //3. prevTodo를 newTodo로 바꿔준다 (기존배열에서 타겟객체를 제외한 앞뒤로 잘라주고 새배열로 리턴함)
       return [
         ...prev.slice(0, targetIndex),
         newTodo,
