@@ -1,5 +1,5 @@
 import { useSetRecoilState } from "recoil";
-import { ITodo, todoState } from "../atoms";
+import { Categories, ITodo, todoState } from "../atoms";
 
 const Todo = ({ text, category, id }: ITodo) => {
   const setTodos = useSetRecoilState(todoState);
@@ -29,18 +29,18 @@ const Todo = ({ text, category, id }: ITodo) => {
     <li>
       <span>{text}</span>
       {/* 익명함수로 클릭이벤트를 처리하는 이유는 인자를 넘겨주어야 하기 때문이다 */}
-      {category !== "TO_DO" && (
-        <button name="TO_DO" onClick={handleClick}>
+      {category !== Categories.TO_DO && (
+        <button name={Categories.TO_DO} onClick={handleClick}>
           ToDo
         </button>
       )}
-      {category !== "DOING" && (
-        <button name="DOING" onClick={handleClick}>
+      {category !== Categories.DOING && (
+        <button name={Categories.DOING} onClick={handleClick}>
           Doing
         </button>
       )}
-      {category !== "DONE" && (
-        <button name="DONE" onClick={handleClick}>
+      {category !== Categories.DONE && (
+        <button name={Categories.DONE} onClick={handleClick}>
           Done
         </button>
       )}
