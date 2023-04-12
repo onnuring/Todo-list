@@ -5,6 +5,7 @@ import { todoState } from "../atoms";
 
 const TodoList = () => {
   const todos = useRecoilValue(todoState);
+  console.log(todos);
   return (
     <div>
       <h1>To Do List</h1>
